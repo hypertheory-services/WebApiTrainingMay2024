@@ -52,3 +52,5 @@ app.UseAuthorization(); // come back to this.
 app.MapControllers(); // create the call sheet. 
 
 app.Run(); // start the process and block here waiting for requests.
+
+public partial class Program { }
