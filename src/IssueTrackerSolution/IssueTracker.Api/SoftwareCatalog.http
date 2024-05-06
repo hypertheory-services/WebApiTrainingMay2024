@@ -12,8 +12,10 @@ Content-Type: application/json
   "description": "An Integrated Development Environment for .NET Developer son Windows"
 }
 
+###
+
+GET {{apiUrl}}/catalog
 
 ###
 
-GET {{apiUrl}}/catalog/d3c9a23d-5d7b-43d0-b6e8-f436083d1209
-
+GET {{apiUrl}}/catalog/920bf506-407a-430a-bd08-591f41995622

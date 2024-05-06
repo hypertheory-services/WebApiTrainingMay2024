@@ -7,6 +7,15 @@ namespace IssueTracker.Api.Catalog;
 public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSession session) : ControllerBase
 {
 
+    [HttpGet("/catalog")]
+    public async Task<ActionResult> GetAllCatalogItemsAsync(CancellationToken token)
+    {
+        var data = await session.Query<CatalogItem>()
+             .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
+            .ToListAsync(token);
+        return Ok(new { data });
+    }
+
     [HttpPost("/catalog")]
     public async Task<ActionResult> AddACatalogItemAsync(
         [FromBody] CreateCatalogItemRequest request,
