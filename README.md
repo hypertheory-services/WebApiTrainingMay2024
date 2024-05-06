@@ -6,6 +6,21 @@ Go into the `.git` directory and edit the `config` file.
 
 Add your Github username and EMail Address in the user config block.
 
+## Dev Environment
+
+Services:
+- Postgres Database: 
+    - Port: 5439
+    - User: user
+    - Password: password
+    - Database: issues
+- Adminer
+    - Web UI for peering into the database.
+    - http://localhost:9090
+
+- Mock OIDC Server
+    - Hot sure we'll get here.
+    - Ports 9999
 
 ## Resources
 
