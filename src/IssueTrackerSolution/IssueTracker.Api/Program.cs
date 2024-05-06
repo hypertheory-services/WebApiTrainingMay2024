@@ -5,6 +5,17 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication().AddJwtBearer();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsSoftwareAdmin", policy =>
+    {
+        policy.RequireRole("SoftwareCenter");
+
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -29,12 +40,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(); // This adds the ability to get the OpenAPI Spec through the API at https://localhost:1338/swagger/v1/swagger.json
+    app.UseSwaggerUI(); // This adds "SwaggerUI" - a web application that reads that OpenAPI spec above and puts a pretty UI on it.
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization(); // come back to this.
 
 app.MapControllers(); // create the call sheet. 
