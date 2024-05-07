@@ -15,6 +15,7 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
     public async Task<ActionResult> GetAllCatalogItemsAsync(CancellationToken token)
     {
         var data = await session.Query<CatalogItem>()
+            .Where(c => c.RemovedAt == null)
              .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
             .ToListAsync(token);
         return Ok(new { data });
@@ -50,7 +51,7 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
     public async Task<ActionResult> GetCatalogItemByIdAsync(Guid id, CancellationToken token)
     {
         var response = await session.Query<CatalogItem>()
-            .Where(c => c.Id == id)
+            .Where(c => c.Id == id && c.RemovedAt == null)
             .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
             .SingleOrDefaultAsync(token);
 
@@ -62,6 +63,28 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
         {
             return Ok(response);
         }
+    }
+
+    [HttpDelete("{id:guid}")]
+    [Authorize(Policy = "IsSoftwareAdmin")]
+    public async Task<ActionResult> RemoveCatalogItemAsync(Guid id)
+    {
+
+        // see if the thing exists.
+        var storedItem = await session.LoadAsync<CatalogItem>(id);
+        if (storedItem != null)
+        {
+            var user = this.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+            //if (storedItem.AddedBy != user.Value)
+            //{
+            //    return StatusCode(403);
+            //}
+            // if it does, do a "soft delete"
+            storedItem.RemovedAt = DateTimeOffset.Now;
+            session.Store(storedItem); // "Upsert"
+            await session.SaveChangesAsync(); // save it.
+        }
+        return NoContent();
     }
 }
 
