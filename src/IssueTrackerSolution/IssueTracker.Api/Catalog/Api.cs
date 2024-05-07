@@ -11,6 +11,7 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
 {
 
     [HttpGet]
+    [ResponseCache(Duration = 5, Location = ResponseCacheLocation.Client)]
     public async Task<ActionResult> GetAllCatalogItemsAsync(CancellationToken token)
     {
         var data = await session.Query<CatalogItem>()
@@ -41,11 +42,11 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
 
 
         var response = entityToSave.MapToResponse();
-        return Ok(response); // I have stored this thing in such a way that you can get it again, it is now
+        return CreatedAtRoute("catalog#get-by-id", new { id = response.Id }, response);
         // part of this collection. 
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:guid}", Name = "catalog#get-by-id")]
     public async Task<ActionResult> GetCatalogItemByIdAsync(Guid id, CancellationToken token)
     {
         var response = await session.Query<CatalogItem>()
