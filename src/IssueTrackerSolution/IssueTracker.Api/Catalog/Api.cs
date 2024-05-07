@@ -33,12 +33,14 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
             return this.CreateProblemDetailsForModelValidation("Cannot Add Catalog Item", validation.ToDictionary());
         }
 
-        var entityToSave = new CatalogItem(Guid.NewGuid(), request.Title, request.Description, userId, DateTimeOffset.Now);
+        var entityToSave = request.MapToCatalogItem(userId);
+
+
         session.Store(entityToSave);
         await session.SaveChangesAsync(); // Do the actual work!
 
 
-        var response = new CatalogItemResponse(entityToSave.Id, request.Title, request.Description);
+        var response = entityToSave.MapToResponse();
         return Ok(response); // I have stored this thing in such a way that you can get it again, it is now
         // part of this collection. 
     }

@@ -30,6 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
 
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header with bearer token",
@@ -50,8 +51,7 @@ builder.Services.AddSwaggerGen(options =>
                 Scheme = "oauth2",
                 Name = "Bearer ",
                 In = ParameterLocation.Header
-            },
-            []
+            },[]
         }
     });
 }); // this will add the stuff to generate an OpenApi specification.
