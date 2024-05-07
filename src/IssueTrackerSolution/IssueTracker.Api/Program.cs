@@ -5,6 +5,7 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// sets up the auth stuff to read from our environment specific config.
 builder.Services.AddAuthentication().AddJwtBearer();
 
 builder.Services.AddAuthorization(options =>
