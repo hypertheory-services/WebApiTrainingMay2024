@@ -1,0 +1,48 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "Lbc2i_Ir3IyENv0UiuiyJ",
+      "type": "text",
+      "x": 279,
+      "y": 168,
+      "width": 809.8436889648438,
+      "height": 245,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1445279514,
+      "version": 157,
+      "versionNonce": 2069082950,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1715090730166,
+      "link": null,
+      "locked": false,
+      "text": "The \"Web\" is specified through HTTP - RFC 2616\nRFC 2616 doesn't specify the \"payload\"\n\n\nOriginally it was just HTML - that is specified at w3c.org\n\n",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 235,
+      "containerId": null,
+      "originalText": "The \"Web\" is specified through HTTP - RFC 2616\nRFC 2616 doesn't specify the \"payload\"\n\n\nOriginally it was just HTML - that is specified at w3c.org\n\n",
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
