@@ -5,27 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace IssueTracker.Api.Catalog;
-[Authorize]
+
+[Authorize(Policy = "IsSoftwareAdmin")]
 [Route("/catalog")]
-public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSession session) : ControllerBase
+public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocumentSession session) : ControllerBase
 {
-
-    [HttpGet]
-    [ResponseCache(Duration = 5, Location = ResponseCacheLocation.Client)]
-    public async Task<ActionResult> GetAllCatalogItemsAsync(CancellationToken token)
-    {
-        var data = await session.Query<CatalogItem>()
-            .Where(c => c.RemovedAt == null)
-             .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
-            .ToListAsync(token);
-        return Ok(new { data });
-    }
-
     [HttpPost]
-    [Authorize(Policy = "IsSoftwareAdmin")]
+
     public async Task<ActionResult> AddACatalogItemAsync(
-        [FromBody] CreateCatalogItemRequest request,
-        CancellationToken token)
+       [FromBody] CreateCatalogItemRequest request,
+       CancellationToken token)
     {
         var user = this.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
         var userId = user.Value;
@@ -46,27 +35,8 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
         return CreatedAtRoute("catalog#get-by-id", new { id = response.Id }, response);
         // part of this collection. 
     }
-
-    [HttpGet("{id:guid}", Name = "catalog#get-by-id")]
-    public async Task<ActionResult> GetCatalogItemByIdAsync(Guid id, CancellationToken token)
-    {
-        var response = await session.Query<CatalogItem>()
-            .Where(c => c.Id == id && c.RemovedAt == null)
-            .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
-            .SingleOrDefaultAsync(token);
-
-        if (response is null)
-        {
-            return NotFound();
-        }
-        else
-        {
-            return Ok(response);
-        }
-    }
-
     [HttpDelete("{id:guid}")]
-    [Authorize(Policy = "IsSoftwareAdmin")]
+
     public async Task<ActionResult> RemoveCatalogItemAsync(Guid id)
     {
 
@@ -75,11 +45,7 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
         if (storedItem != null)
         {
             var user = this.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
-            //if (storedItem.AddedBy != user.Value)
-            //{
-            //    return StatusCode(403);
-            //}
-            // if it does, do a "soft delete"
+
             storedItem.RemovedAt = DateTimeOffset.Now;
             session.Store(storedItem); // "Upsert"
             await session.SaveChangesAsync(); // save it.
