@@ -3,6 +3,7 @@ using IssueTracker.Api.Catalog;
 using Marten;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text.Json;
 
@@ -61,6 +62,8 @@ builder.Services.AddSwaggerGen(options =>
     });
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    options.DocInclusionPredicate((_, api) => !string.IsNullOrWhiteSpace(api.GroupName));
+    options.EnableAnnotations();
 }); // this will add the stuff to generate an OpenApi specification.
 //builder.Services.AddSingleton<IValidator<CreateCatalogItemRequest>, CreateCatalogItemRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCatalogItemRequestValidator>();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 
 namespace IssueTracker.Api.Status;
@@ -6,6 +7,7 @@ namespace IssueTracker.Api.Status;
 /// This is the API For the Status Stuff
 /// </summary>
 /// <param name="logger">Used to log some stuff</param>
+[ApiExplorerSettings(GroupName = "Admin")]
 public class Api(ILogger<Api> logger) : ControllerBase
 {
     /// <summary>
@@ -16,6 +18,8 @@ public class Api(ILogger<Api> logger) : ControllerBase
     /// <response code="200">The status of the system, including the.... </response>
     [HttpGet("/status")]
     [Produces("application/json")]
+    [SwaggerOperation(Tags = ["Admin"])]
+
     public async Task<ActionResult<StatusResponseModel>> GetTheStatus(CancellationToken token)
     {
         // Some real work here, that we have to await (it's going to be a database call, an API call, whatever.
@@ -32,6 +36,7 @@ public class Api(ILogger<Api> logger) : ControllerBase
     }
 
     [HttpPost("/status")]
+    [SwaggerOperation(Tags = ["Admin"])]
     public async Task<ActionResult> AddANewStatusMessage([FromBody] StatusRequestModel request)
     {
         return Ok();

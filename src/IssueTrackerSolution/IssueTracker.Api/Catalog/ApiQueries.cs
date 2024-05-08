@@ -2,14 +2,18 @@
 using Marten;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace IssueTracker.Api.Catalog;
 [Authorize]
 [Route("/catalog")]
+
+[ApiExplorerSettings(GroupName = "Software Catalog")]
 public class ApiQueries(IQuerySession session) : ControllerBase
 {
 
     [HttpGet]
+    [SwaggerOperation(Tags = ["Software Catalog"])]
     [ResponseCache(Duration = 5, Location = ResponseCacheLocation.Client)]
     public async Task<ActionResult> GetAllCatalogItemsAsync(CancellationToken token)
     {
@@ -24,7 +28,7 @@ public class ApiQueries(IQuerySession session) : ControllerBase
 
     [HttpGet("{id:guid}", Name = "catalog#get-by-id")]
     [ProducesResponseType(200)]
-
+    [SwaggerOperation(Tags = ["Software Catalog"])]
     public async Task<ActionResult<CatalogItemResponse>> GetCatalogItemByIdAsync(Guid id, CancellationToken token)
     {
         var response = await session.Query<CatalogItem>()
