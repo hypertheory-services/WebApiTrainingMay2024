@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssueTracker.Api", "IssueTr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssueTracker.ContractTests", "IssueTracker.ContractTests\IssueTracker.ContractTests.csproj", "{D11614E3-1E35-4418-93DF-1BA29129E6EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.UnitTests", "IssueTracker.UnitTests\IssueTracker.UnitTests.csproj", "{E7768354-DC1C-4884-8D7C-9477FA39E1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssueTracker.UnitTests", "IssueTracker.UnitTests\IssueTracker.UnitTests.csproj", "{E7768354-DC1C-4884-8D7C-9477FA39E1FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A13C5B64-6F23-492C-ABFC-AFFB3110E508}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

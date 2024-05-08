@@ -8,11 +8,22 @@ namespace IssueTracker.Api.Catalog;
 
 [Authorize(Policy = "IsSoftwareAdmin")]
 [Route("/catalog")]
+[Produces("application/json")]
 public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocumentSession session) : ControllerBase
 {
-    [HttpPost]
 
-    public async Task<ActionResult> AddACatalogItemAsync(
+    /// <summary>
+    /// Add an Item to the Software Catalog
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    /// <response code="201">The new software item</response>
+    /// <response code="400">A application/problems+json response</response>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<CatalogItemResponse>> AddACatalogItemAsync(
        [FromBody] CreateCatalogItemRequest request,
        CancellationToken token)
     {
@@ -41,7 +52,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
     {
 
         // see if the thing exists.
-        var storedItem = await session.LoadAsync<CatalogItem>(id);
+        var storedItem = await session.LoadAsync<CatalogItem>(id, token);
         if (storedItem != null)
         {
             var user = this.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
