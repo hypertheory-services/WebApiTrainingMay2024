@@ -1,6 +1,7 @@
 using FluentValidation;
 using IssueTracker.Api.Catalog;
 using Marten;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -32,7 +33,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddFluentValidationRulesToSwagger();
 builder.Services.AddSwaggerGen(options =>
 {
 
