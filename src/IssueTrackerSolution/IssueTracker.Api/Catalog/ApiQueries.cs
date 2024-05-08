@@ -20,7 +20,7 @@ public class ApiQueries(IQuerySession session) : ControllerBase
         var data = await session.Query<CatalogItem>()
             .Where(c => c.RemovedAt == null)
              .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
-            .ToListAsync(token: token);
+            .ToListAsync();
         return Ok(new { data });
     }
 
