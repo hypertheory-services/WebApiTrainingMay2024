@@ -28,7 +28,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
 
 
         session.Store(entityToSave);
-        await session.SaveChangesAsync(); // Do the actual work!
+        await session.SaveChangesAsync(token); // Do the actual work!
 
 
         var response = entityToSave.MapToResponse();
@@ -37,7 +37,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
     }
     [HttpDelete("{id:guid}")]
 
-    public async Task<ActionResult> RemoveCatalogItemAsync(Guid id)
+    public async Task<ActionResult> RemoveCatalogItemAsync(Guid id, CancellationToken token)
     {
 
         // see if the thing exists.
@@ -48,7 +48,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
 
             storedItem.RemovedAt = DateTimeOffset.Now;
             session.Store(storedItem); // "Upsert"
-            await session.SaveChangesAsync(); // save it.
+            await session.SaveChangesAsync(token); // save it.
         }
         return NoContent();
     }
@@ -71,7 +71,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
         item.Title = request.Title;
         item.Description = request.Description;
         session.Store(item);
-        await session.SaveChangesAsync();
+        await session.SaveChangesAsync(token);
         return Ok();
 
     }
