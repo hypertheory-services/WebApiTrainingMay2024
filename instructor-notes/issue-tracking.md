@@ -77,7 +77,10 @@ Content-Type: application/json
     "id": 93939,
     "description": "Thing is busted!",
     "user": "/users/839893893",
-    "software": "/catalog/3983989893",
+    "software":{
+        id": 389383,
+        title
+    }
     "status": "Submitted"
 }
 
@@ -94,3 +97,15 @@ Nit-picky nose punching land.
 500 - the worst (so bad we blew up, we suck!)
 
 
+
+
+{
+  "id": "9f2d241e-5635-4446-9c3e-0a6fe01340f9",
+  "user": 
+  "software": {
+    "id": "541dffca-527c-4c5b-a8a4-03fda096a1d0",
+    "title": "Fake Title",
+    "description": "Fake Description"
+  },
+  "status": "Submitted"
+}
