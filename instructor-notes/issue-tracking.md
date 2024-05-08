@@ -24,9 +24,16 @@ Authorization: 3893893
 
 Support techs (just adding this for now) can see the issues
     - they can see ALL issues
+        GET /issues
     - they can see issues by status
+        GET /issues/?status=Submitted
+        GET /recent-pending-issues
+        GET /closed-issues
     - they can see issues for a specific piece of software
+        GET /catalog/{id}/issues
     - they can see issues from a specific user
+        GET /issues?userId=38983989389839
+        GET /users/{userId}/issues
 
 
 ## We have to design:

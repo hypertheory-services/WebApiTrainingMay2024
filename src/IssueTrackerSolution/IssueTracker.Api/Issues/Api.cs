@@ -9,6 +9,17 @@ namespace IssueTracker.Api.Issues;
 [ApiExplorerSettings(GroupName = "Issues")]
 public class Api(UserIdentityService userIdentityService, IDocumentSession session) : ControllerBase
 {
+    [HttpGet("/issues")]
+    [SwaggerOperation(Tags = ["Issues"])]
+    public async Task<ActionResult> GetIssuesAsync(CancellationToken token, [FromQuery] IssueStatusType status, [FromQuery] DateTimeOffset beginningDate)
+    {
+        return Ok(new
+        {
+            filteringBy = status,
+            startingData = beginningDate
+        }); // query and map all the issues.
+    }
+
     // POST /catalog/{id}/issues
     [HttpPost("/catalog/{catalogItemId:guid}/issues")]
     [SwaggerOperation(Tags = ["Issues", "Software Catalog"])]
